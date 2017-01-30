@@ -1,3 +1,4 @@
+
 function create(tag) { return document.createElement(tag); }
 function text(text) { return document.createTextNode(text); }
 function remove(id) { id.parentElement.removeChild(id); }
@@ -6,6 +7,8 @@ function get (id) { return document.getElementById(id); }
 function getTag(tag) { return Array.from(document.getElementsByTagName(tag)); }
 function getClass(c) { return Array.from(document.getElementsByClassName(c)); }
 
+(function () {
+  
 function addButton(e) {
   const el = create('div');
   el.id = 'calc-' + e;
@@ -22,7 +25,7 @@ function addContainer(e, addclass) {
 const calculator = get('calculator');
 const panel = create('div');
 const buttons = [
-  'reset', 'equals', 'squareR', 'temp',
+  'reset', 'squareR', 'temp', 'equals',
   '1', '2', '3', 'multiply',
   '4', '5', '6', 'divide',
   '7', '8', '9', 'add',
@@ -41,6 +44,12 @@ const symbols = {
 };
 
 calculator.appendChild(panel).className = 'calc__panel';
-buttons.forEach(operator => calculator.appendChild(operator));
+buttons.forEach(operator => {
+  let txt = text(symbols[operator.id.slice(5)]);
+  operator.appendChild(txt);
+  calculator.appendChild(operator);
+});
 
+calculator.appendChild(create('div')).className = 'clear'; // add clear to calc
 remove(get('noJS')); // remove no JS warning.
+})();
