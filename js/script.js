@@ -8,7 +8,7 @@ function getTag(tag) { return Array.from(document.getElementsByTagName(tag)); }
 function getClass(c) { return Array.from(document.getElementsByClassName(c)); }
 
 (function () {
-  
+
 function addButton(e) {
   const el = create('div');
   el.id = 'calc-' + e;
@@ -25,7 +25,7 @@ function addContainer(e, addclass) {
 const calculator = get('calculator');
 const panel = create('div');
 const buttons = [
-  'reset', 'squareR', 'temp', 'equals',
+  'reset', '(', ')', 'equals',
   '1', '2', '3', 'multiply',
   '4', '5', '6', 'divide',
   '7', '8', '9', 'add',
@@ -34,7 +34,7 @@ const buttons = [
 
 const symbols = {
   reset: 'C',  equals: '=',
-  squareR: '√',  temp: 'temp',
+  '(': '(',  ')': ')',
   1: '1', 2: '2', 3: '3',
   4: '4', 5: '5', 6: '6',
   7: '7', 8: '8', 9: '9',
@@ -44,10 +44,38 @@ const symbols = {
 };
 
 calculator.appendChild(panel).className = 'calc__panel';
-buttons.forEach(operator => {
-  let txt = text(symbols[operator.id.slice(5)]);
-  operator.appendChild(txt);
-  calculator.appendChild(operator);
+buttons.forEach(btn => {
+  let txt = text(symbols[btn.id.slice(5)]);
+  btn.appendChild(txt);
+  calculator.appendChild(btn);
+  btn.addEventListener('click', (e) => {
+    let op = e.target.innerHTML;
+    if (op === 'C') {
+      panel.innerHTML = '';
+      return;
+    } else if (op === '=') {
+      if (/^[0-9]+$/.test(panel.innerHTML.slice(-1)) ||
+          panel.innerHTML.slice(-1) === ')') {
+        panel.innerHTML = panel.innerHTML.replace('x', '*').replace('÷', '/');
+        panel.innerHTML = eval(panel.innerHTML);
+        return;
+      } else {
+        return;
+      }
+    } else if (op === '(') {
+      if (!/^[0-9]+$/.test(panel.innerHTML.slice(-1)) &&
+          panel.innerHTML.slice(-1) !== '(') {
+        panel.innerHTML += op;
+        return;
+      } else { return; }
+    }
+    if (/^[0-9]+$/.test(op) || // button is a number
+        /^[0-9]+$/.test(panel.innerHTML.slice(-1))) { // if last is a number
+      panel.innerHTML += op;
+    }
+    if (panel.innerHTML.slice(-1) );
+
+  });
 });
 
 calculator.appendChild(create('div')).className = 'clear'; // add clear to calc
