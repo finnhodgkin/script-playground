@@ -43,40 +43,61 @@ const symbols = {
   add: '+', minus: '-'
 };
 
+let hasEquals = false;
+
 calculator.appendChild(panel).className = 'calc__panel';
+
 buttons.forEach(btn => {
   let txt = text(symbols[btn.id.slice(5)]);
   btn.appendChild(txt);
   calculator.appendChild(btn);
-  btn.addEventListener('click', (e) => {
-    let op = e.target.innerHTML;
-    if (op === 'C') {
-      panel.innerHTML = '';
-      return;
-    } else if (op === '=') {
-      if (/^[0-9]+$/.test(panel.innerHTML.slice(-1)) ||
-          panel.innerHTML.slice(-1) === ')') {
-        panel.innerHTML = panel.innerHTML.replace('x', '*').replace('÷', '/');
-        panel.innerHTML = eval(panel.innerHTML);
-        return;
-      } else {
-        return;
-      }
-    } else if (op === '(') {
-      if (!/^[0-9]+$/.test(panel.innerHTML.slice(-1)) &&
-          panel.innerHTML.slice(-1) !== '(') {
-        panel.innerHTML += op;
-        return;
-      } else { return; }
-    }
-    if (/^[0-9]+$/.test(op) || // button is a number
-        /^[0-9]+$/.test(panel.innerHTML.slice(-1))) { // if last is a number
-      panel.innerHTML += op;
-    }
-    if (panel.innerHTML.slice(-1) );
-
-  });
+  btn.addEventListener('click', buttonPress);
 });
+
+function buttonPress(e) {
+    let op = e.target.innerHTML;
+
+    if (/^[0-9]+$/.test(op)) { addNumber(op); return; }
+    if (op === 'C') { clear(); return; }
+    if (op === '=') { equals(); return; }
+    if (op === '(') { bracket(); return; }
+    oper(op); return;
+}
+
+function clear() {
+  panel.innerHTML = '';
+}
+function equals() {
+  if (/^[0-9]+$/.test(panel.innerHTML.slice(-1)) ||
+      panel.innerHTML.slice(-1) === ')') {
+    panel.innerHTML = panel.innerHTML.replace('x', '*').replace('÷', '/');
+    panel.innerHTML = eval(panel.innerHTML);
+    hasEquals = true;
+  }
+}
+function bracket() {
+  const lastChar = panel.innerHTML.slice(-1);
+  const isLastNum = /^[0-9]+$/.test(lastChar);
+  if (!isLastNum && lastChar !== '(' ) {
+    panel.innerHTML += '(';
+  }
+}
+function addNumber(op) {
+  if (!hasEquals) {
+    panel.innerHTML += op;
+    return;
+  }
+  panel.innerHTML = op;
+  hasEquals = false;
+}
+function oper(op) {
+  if (/^[0-9]+$/.test(op) || // button is a number
+      /^[0-9]+$/.test(panel.innerHTML.slice(-1)) ||
+      panel.innerHTML.slice(-1)=== ')') {
+    panel.innerHTML += op;
+    hasEquals = hasEquals ? !hasEquals : hasEquals;
+  }
+}
 
 calculator.appendChild(create('div')).className = 'clear'; // add clear to calc
 remove(get('noJS')); // remove no JS warning.

@@ -4,7 +4,7 @@
   width: 50%;
   background-color: black;
   margin: 0 auto;
-  padding: 20px;
+  padding: 3vw;
 }
 
 .calc__panel {
@@ -12,10 +12,11 @@
   height: 5.5vw;
   background-color: white;
   line-height: 5.5vw;
-  font-size: 150%;
+  font-size: 3vw;
   font-weight: 600;
   padding: 3%;
   overflow: hidden;
+  text-align: right;
 }
 
 .calc__button {
@@ -31,7 +32,7 @@
   user-select: none;
   line-height: 6vw;
   text-align: center;
-  font-size: 150%;
+  font-size: 3vw;
   font-weight: 600;
 }
 
