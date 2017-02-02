@@ -3,6 +3,16 @@ function create(tag) { return document.createElement(tag); }
 function text(text) { return document.createTextNode(text); }
 function remove(id) { id.parentElement.removeChild(id); }
 
+function createWithClass (tag, cl) {
+  tag = tag || 'div';
+  let el = document.createElement(tag);
+  el.classList = cl || '';
+  return el;
+}
+
+
+console.log(createWithClass('div', 'test'));
+
 function get (id) { return document.getElementById(id); }
 function getTag(tag) { return Array.from(document.getElementsByTagName(tag)); }
 function getClass(c) { return Array.from(document.getElementsByClassName(c)); }
@@ -75,6 +85,7 @@ function equals() {
     hasEquals = true;
   }
 }
+
 function bracket() {
   const lastChar = panel.innerHTML.slice(-1);
   const isLastNum = /^[0-9]+$/.test(lastChar);
