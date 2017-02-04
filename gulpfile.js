@@ -49,7 +49,7 @@ gulp.task('inject', ['styles'], () => {
     .pipe(gulp.dest(''));
 });
 
-gulp.task('watcher', ['browserSync', 'styles', 'inject'], () => {
+gulp.task('default', ['browserSync', 'styles', 'inject'], () => {
   gulp.watch([config.sass], ['inject']);
   gulp.watch('*.html', browserSync.reload);
   gulp.watch('./js/**/*.js', ['inject']);

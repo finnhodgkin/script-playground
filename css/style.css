@@ -2,7 +2,8 @@
   width: 50%;
   background-color: black;
   margin: 0 auto;
-  padding: 3vw; }
+  padding: 3vw;
+  display: none; }
 
 .calc__panel {
   width: 94%;
@@ -49,3 +50,9 @@
 
 .clear {
   clear: both; }
+
+.stopwatch {
+  width: 50%;
+  margin: 0 auto;
+  background-color: black;
+  height: 500px; }

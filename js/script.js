@@ -1,17 +1,32 @@
 
-function create(tag) { return document.createElement(tag); }
+// function create(tag) { return document.createElement(tag); }
 function text(text) { return document.createTextNode(text); }
 function remove(id) { id.parentElement.removeChild(id); }
 
-function createWithClass (tag, cl) {
+function create (tag, ...props) {
   tag = tag || 'div';
   let el = document.createElement(tag);
-  el.classList = cl || '';
+  props.forEach(prop => {
+    if (typeof prop === 'object') {
+      Object.keys(prop).forEach(key => {
+        let property = key.split('.');
+        if (property.length > 1 && property[0] === 'style') {
+          el.style[property[1]] = prop[key];
+          return;
+        }
+        el[key] = prop[key];
+      });
+    }
+    else {
+      prop.slice(0,1) === '#' ? el.id = prop.slice(1) :
+      prop.slice(0,1) === '.' ? el.className += el.className ? ' ' + prop.slice(1) : prop.slice(1) :
+      el.appendChild(text(prop));
+    }
+  });
   return el;
 }
+get('stopwatch').appendChild(create('div'));  //, { 'style.color':'black'}, '.testing123', '#test', 'this is the contents'));
 
-
-console.log(createWithClass('div', 'test'));
 
 function get (id) { return document.getElementById(id); }
 function getTag(tag) { return Array.from(document.getElementsByTagName(tag)); }
