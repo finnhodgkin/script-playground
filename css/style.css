@@ -51,13 +51,9 @@
 .clear {
   clear: both; }
 
-#stopwatch {
-  display: none; }
-
 .stopwatch {
   width: 50%;
   margin: 0 auto;
-  background-color: black;
   height: 500px; }
 
 .hannah {

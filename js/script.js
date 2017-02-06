@@ -2,11 +2,9 @@
 function text(text) { return document.createTextNode(text); }
 function remove(id) { id.parentElement.removeChild(id); }
 
-
-
 function create (tag, ...props) {
   tag = tag || 'div'; // default to div
-  let el = document.createElement(tag); //build element
+  const el = document.createElement(tag); //build element
   props.forEach(prop => { // build element props / nested elements
     if (typeof prop === 'object') {
       if (prop instanceof Node) { // if node element then nest
@@ -17,15 +15,15 @@ function create (tag, ...props) {
           if (property[0] === 'style') { // check if dot notation was 'style'
             property[1] in el.style ? // if style exists
               el.style[property[1]] = prop[key] : // apply style
-              console.warn(property[1] + ' is not a style'); // or error
+              console.warn(property[1] + ' is not a style'); // or poss error
             return;
           }
           el[key] = prop[key]; // apply non-style property
         });
       }
     } else {
-      prop.slice(0,1) === '#' ? el.id = prop.slice(1) :
-      prop.slice(0,1) === '.' ? el.className += el.className ?
+      prop.slice(0,1) === '#' ? el.id = prop.slice(1) : // add id
+      prop.slice(0,1) === '.' ? el.className += el.className ? // add class
         ' ' + prop.slice(1) :
         prop.slice(1) :
       el.appendChild(text(prop));
@@ -37,12 +35,14 @@ function create (tag, ...props) {
 const div = (...props) => create('div', ...props);
 const h1 = (...props) => create('h1', ...props);
 const p = (...props) => create('p', ...props);
+const a = (link, ...props) => create('a', { href:link }, ...props);
+const span = (...props) => create('span', ...props);
 
 get('stopwatch').appendChild(div({'style.backgroundColor':'black'},
                                 h1('.test',
                                     h1('#test')),
-                                p('testing, 1, 2, 3'),
-                                p('Paragraph test number 2'),
+                                p('testing ', span('.test', 'test '), 'testing'),
+                                p('Paragraph ', a('google.co.uk', 'testing'), ' test number 2'),
                                 h1('.test2', {'style.backgroundColor':'orange'})
                               )
                             );
