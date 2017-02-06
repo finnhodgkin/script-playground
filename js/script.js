@@ -2,31 +2,50 @@
 function text(text) { return document.createTextNode(text); }
 function remove(id) { id.parentElement.removeChild(id); }
 
+
+
 function create (tag, ...props) {
-  tag = tag || 'div';
-  let el = document.createElement(tag);
-  props.forEach(prop => {
+  tag = tag || 'div'; // default to div
+  let el = document.createElement(tag); //build element
+  props.forEach(prop => { // build element props / nested elements
     if (typeof prop === 'object') {
-      Object.keys(prop).forEach(key => {
-        let property = key.split('.');
-        if (property.length > 1 && property[0] === 'style') {
-          el.style[property[1]] = prop[key];
-          return;
-        }
-        el[key] = prop[key];
-      });
-    }
-    else {
+      if (prop instanceof Node) { // if node element then nest
+        el.appendChild(prop);
+      } else {
+        Object.keys(prop).forEach(key => { // build properties
+          let property = key.split('.'); // if dot notation in props
+          if (property[0] === 'style') { // check if dot notation was 'style'
+            property[1] in el.style ? // if style exists
+              el.style[property[1]] = prop[key] : // apply style
+              console.warn(property[1] + ' is not a style'); // or error
+            return;
+          }
+          el[key] = prop[key]; // apply non-style property
+        });
+      }
+    } else {
       prop.slice(0,1) === '#' ? el.id = prop.slice(1) :
       prop.slice(0,1) === '.' ? el.className += el.className ?
-                                  ' ' + prop.slice(1) :
-                                  prop.slice(1) :
-                                el.appendChild(text(prop));
+        ' ' + prop.slice(1) :
+        prop.slice(1) :
+      el.appendChild(text(prop));
     }
   });
   return el;
 }
-get('stopwatch').appendChild(create('div'));
+
+const div = (...props) => create('div', ...props);
+const h1 = (...props) => create('h1', ...props);
+const p = (...props) => create('p', ...props);
+
+get('stopwatch').appendChild(div({'style.backgroundColor':'black'},
+                                h1('.test',
+                                    h1('#test')),
+                                p('testing, 1, 2, 3'),
+                                p('Paragraph test number 2'),
+                                h1('.test2', {'style.backgroundColor':'orange'})
+                              )
+                            );
 
 
 function get (id) { return document.getElementById(id); }
