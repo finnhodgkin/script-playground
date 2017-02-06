@@ -60,10 +60,49 @@
   clear: both;
 }
 
+#stopwatch {
+  display: none;
+}
+
 
 .stopwatch {
   width: 50%;
   margin: 0 auto;
   background-color: black;
   height: 500px;
+}
+
+.hannah {
+  font-size: 9vw;
+  text-align: center;
+  font-family: 'Barrio', sans-serif;
+  font-weight: 600;
+  color: grey;
+
+}
+.container {
+  perspective: 2000px;
+}
+.gallery {
+  width: 500px;
+  background-image: url('/images/drawing.jpg');
+  height: 400px;
+  margin: 0 auto;
+  margin-top: -25px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  animation-timing-function: ease-in-out;
+  animation-name: wobble;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  border: 1px solid black;
+}
+
+@keyframes wobble {
+    0% { transform: rotateY(-15deg) rotateZ(5deg); }
+    50% { transform: rotateY(15deg) rotateZ(5deg);; }
+    100% { transform: rotateY(-15deg) rotateZ(5deg);; }
 }

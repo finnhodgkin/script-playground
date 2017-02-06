@@ -51,8 +51,69 @@
 .clear {
   clear: both; }
 
+#stopwatch {
+  display: none; }
+
 .stopwatch {
   width: 50%;
   margin: 0 auto;
   background-color: black;
   height: 500px; }
+
+.hannah {
+  font-size: 9vw;
+  text-align: center;
+  font-family: 'Barrio', sans-serif;
+  font-weight: 600;
+  color: grey; }
+
+.container {
+  -webkit-perspective: 2000px;
+          perspective: 2000px; }
+
+.gallery {
+  width: 500px;
+  background-image: url("/images/drawing.jpg");
+  height: 400px;
+  margin: 0 auto;
+  margin-top: -25px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-name: wobble;
+          animation-name: wobble;
+  -webkit-animation-duration: 8s;
+          animation-duration: 8s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  border: 1px solid black; }
+
+@-webkit-keyframes wobble {
+  0% {
+    -webkit-transform: rotateY(-15deg) rotateZ(5deg);
+            transform: rotateY(-15deg) rotateZ(5deg); }
+  50% {
+    -webkit-transform: rotateY(15deg) rotateZ(5deg);
+            transform: rotateY(15deg) rotateZ(5deg); }
+  100% {
+    -webkit-transform: rotateY(-15deg) rotateZ(5deg);
+            transform: rotateY(-15deg) rotateZ(5deg); } }
+
+@keyframes wobble {
+  0% {
+    -webkit-transform: rotateY(-15deg) rotateZ(5deg);
+            transform: rotateY(-15deg) rotateZ(5deg); }
+  50% {
+    -webkit-transform: rotateY(15deg) rotateZ(5deg);
+            transform: rotateY(15deg) rotateZ(5deg); }
+  100% {
+    -webkit-transform: rotateY(-15deg) rotateZ(5deg);
+            transform: rotateY(-15deg) rotateZ(5deg); } }

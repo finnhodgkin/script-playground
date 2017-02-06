@@ -1,5 +1,4 @@
 
-// function create(tag) { return document.createElement(tag); }
 function text(text) { return document.createTextNode(text); }
 function remove(id) { id.parentElement.removeChild(id); }
 
@@ -19,13 +18,15 @@ function create (tag, ...props) {
     }
     else {
       prop.slice(0,1) === '#' ? el.id = prop.slice(1) :
-      prop.slice(0,1) === '.' ? el.className += el.className ? ' ' + prop.slice(1) : prop.slice(1) :
-      el.appendChild(text(prop));
+      prop.slice(0,1) === '.' ? el.className += el.className ?
+                                  ' ' + prop.slice(1) :
+                                  prop.slice(1) :
+                                el.appendChild(text(prop));
     }
   });
   return el;
 }
-get('stopwatch').appendChild(create('div'));  //, { 'style.color':'black'}, '.testing123', '#test', 'this is the contents'));
+get('stopwatch').appendChild(create('div'));
 
 
 function get (id) { return document.getElementById(id); }
